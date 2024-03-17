@@ -1,7 +1,9 @@
 import { Elysia } from "elysia";
 import userController from "./user/user-controller";
+import swagger from "@elysiajs/swagger";
 
 const app = new Elysia()
+  .use(swagger())
   .get("/", () => "Hello Elysia")
   .use(userController)
   .listen(3000);
