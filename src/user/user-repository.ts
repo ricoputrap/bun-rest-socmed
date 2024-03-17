@@ -13,7 +13,8 @@ class UserRepository implements IUserRepository {
   getAll(): Promise<User[]> {
     return new Promise((resolve) => {
       const users = db.query<UserData, null>(`
-        SELECT * FROM user
+        SELECT id, name, username, email, profile_picture, created_at
+        FROM user
         WHERE is_active = 1
       `).all(null);
 
@@ -25,7 +26,8 @@ class UserRepository implements IUserRepository {
     return new Promise((resolve) => {
       const is_active: number = isActive ? 1 : 0;
       const user = db.query<UserData, [number, number]>(`
-        SELECT * FROM user
+        SELECT id, name, username, email, profile_picture, created_at
+        FROM user
         WHERE id = ? AND is_active = ?
       `).get(id, is_active);
 
@@ -38,7 +40,8 @@ class UserRepository implements IUserRepository {
     return new Promise((resolve) => {
       const is_active: number = isActive ? 1 : 0;
       const user = db.query<UserData, [string, number]>(`
-        SELECT * FROM user
+        SELECT id, name, username, email, profile_picture, created_at
+        FROM user
         WHERE username = ? AND is_active = ?
       `).get(username, is_active);
 
@@ -51,7 +54,8 @@ class UserRepository implements IUserRepository {
     return new Promise((resolve) => {
       const is_active: number = isActive ? 1 : 0;
       const user = db.query<UserData, [string, number]>(`
-        SELECT * FROM user
+        SELECT id, name, username, email, profile_picture, created_at
+        FROM user
         WHERE email = ? AND is_active = ?
       `).get(email, is_active);
 
