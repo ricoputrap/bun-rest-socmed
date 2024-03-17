@@ -2,10 +2,8 @@ import { Elysia } from "elysia";
 import userController from "./user/user-controller";
 import swagger from "@elysiajs/swagger";
 import authController from "./auth/auth-controller";
-import { cookie } from '@elysiajs/cookie';
 
 const app = new Elysia()
-  // .use(cookie())
   .use(swagger())
   .get("/", () => {
     return {
