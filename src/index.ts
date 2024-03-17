@@ -2,6 +2,7 @@ import { Elysia } from "elysia";
 import userController from "./domain/user/user-controller";
 import swagger from "@elysiajs/swagger";
 import authController from "./domain/auth/auth-controller";
+import postController from "./domain/post/post-controller";
 
 const app = new Elysia()
   .use(swagger())
@@ -12,7 +13,7 @@ const app = new Elysia()
   })
   .use(userController)
   .use(authController)
-  // todo .use(postController)
+  .use(postController)
   // todo .use(searchController)
   .listen(3000);
 
