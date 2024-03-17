@@ -43,6 +43,19 @@ userController.group("/users", (app) => app
   // create new user
   .post("/", async ({ body, set }) => {
     try {
+      if (body.name === "") {
+        throw new Error("Name is required");
+      }
+      if (body.username === "") {
+        throw new Error("Username is required");
+      }
+      if (body.email === "") {
+        throw new Error("Email is required");
+      }
+      if (body.password === "") {
+        throw new Error("Password is required");
+      }
+
       const user = await userService.create(body);
       
       const response: SuccessResponse = {
@@ -51,13 +64,13 @@ userController.group("/users", (app) => app
       }
       return response;
     }
-    catch (error) {
+    catch (error: any) {
       set.status = EnumHttpStatusCode.INTERNAL_SERVER_ERROR;
 
       const errorResponse: ErrorResponse = {
         statusCode: EnumHttpStatusCode.INTERNAL_SERVER_ERROR,
         error: "Internal Server Error",
-        message: "Something went wrong"
+        message: error.message
       }
 
       return errorResponse;
