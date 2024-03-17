@@ -7,3 +7,13 @@ export const basicAuthModel = new Elysia({ name: 'Model.BasicAuth' })
       password: t.String()
     })
   });
+
+export const newUserModel = new Elysia({ name: 'Model.NewUser' })
+  .model({
+    'new-user': t.Object({
+      name: t.String(),
+      username: t.String(),
+      email: t.String(),
+      password: t.String()
+    })
+  });
