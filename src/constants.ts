@@ -7,3 +7,14 @@ export enum EnumHttpStatusCode {
   NOT_FOUND = 404,
   INTERNAL_SERVER_ERROR = 500,
 }
+
+export type SuccessResponse = {
+  data: any;
+  statusCode: EnumHttpStatusCode;
+}
+
+export type ErrorResponse = {
+  statusCode: EnumHttpStatusCode;
+  error: string;
+  message: string;
+}

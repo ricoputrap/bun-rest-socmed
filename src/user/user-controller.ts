@@ -1,20 +1,9 @@
 import { Elysia, t } from "elysia";
 import UserService from "./user-service";
-import { EnumHttpStatusCode } from "../constants";
+import { EnumHttpStatusCode, ErrorResponse, SuccessResponse } from "../constants";
 
 const userController = new Elysia();
 const userService = new UserService();
-
-type SuccessResponse = {
-  data: any;
-  statusCode: EnumHttpStatusCode;
-}
-
-type ErrorResponse = {
-  statusCode: EnumHttpStatusCode;
-  error: string;
-  message: string;
-}
 
 userController.group("/users", (app) => app
   // get all active users

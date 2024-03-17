@@ -1,3 +1,5 @@
+import { Elysia, t } from 'elysia'
+
 export type UserData = {
   id: number;
   name: string;
@@ -9,7 +11,8 @@ export type UserData = {
   created_at?: number;
 }
 
-export type User = Omit<UserData, 'password'>;
+export type User = Omit<UserData, 'password' | 'is_active'>;
+export type UserWithPassword = Omit<UserData, 'is_active'>;
 
 export type UserInput = {
   name: string;

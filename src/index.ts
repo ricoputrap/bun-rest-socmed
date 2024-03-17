@@ -1,8 +1,11 @@
 import { Elysia } from "elysia";
 import userController from "./user/user-controller";
 import swagger from "@elysiajs/swagger";
+import authController from "./auth/auth-controller";
+import { cookie } from '@elysiajs/cookie';
 
 const app = new Elysia()
+  // .use(cookie())
   .use(swagger())
   .get("/", () => {
     return {
@@ -10,7 +13,7 @@ const app = new Elysia()
     };
   })
   .use(userController)
-  // todo .use(authController)
+  .use(authController)
   // todo .use(postController)
   // todo .use(searchController)
   .listen(3000);

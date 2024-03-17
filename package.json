@@ -7,6 +7,8 @@
     "db:init": "bun run src/db/create-tables.ts"
   },
   "dependencies": {
+    "@elysiajs/cookie": "^0.8.0",
+    "@elysiajs/jwt": "0.8.0",
     "@elysiajs/swagger": "^0.8.5",
     "elysia": "latest"
   },

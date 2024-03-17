@@ -1,13 +1,6 @@
 import db from "../db";
-import { User, UserData, UserInput } from "./user-entity";
-
-export interface IUserRepository {
-  getAll(): Promise<User[]>
-  getById(id: number, is_active?: boolean): Promise<User | undefined>
-  getByUsername(username: string, is_active?: boolean): Promise<User | undefined>
-  getByEmail(email: string, is_active?: boolean): Promise<User | undefined>
-  create(user: UserInput): Promise<number>
-}
+import { User, UserData, UserInput, UserWithPassword } from "./user-entity";
+import { IUserRepository } from "./user-repository.types";
 
 class UserRepository implements IUserRepository {
   getAll(): Promise<User[]> {
@@ -36,14 +29,18 @@ class UserRepository implements IUserRepository {
     })
   }
 
-  getByUsername(username: string, isActive: boolean = true): Promise<User | undefined> {
+  getByUsername(username: string, withPassword: boolean = false): Promise<
+    User | UserWithPassword | undefined
+  > {
     return new Promise((resolve) => {
-      const is_active: number = isActive ? 1 : 0;
-      const user = db.query<UserData, [string, number]>(`
-        SELECT id, name, username, email, profile_picture, created_at
+      let columns = "id, name, username, email, profile_picture, created_at";
+      if (withPassword) columns = `${columns}, password`;
+
+      const user = db.query<UserData, [string]>(`
+        SELECT ${columns}
         FROM user
-        WHERE username = ? AND is_active = ?
-      `).get(username, is_active);
+        WHERE username = ? AND is_active = 1
+      `).get(username);
 
       if (user) resolve(user);
       else resolve(undefined);
