@@ -1,6 +1,6 @@
 import { Elysia, t } from "elysia";
 import UserService from "./user-service";
-import { EnumHttpStatusCode, ErrorResponse, SuccessResponse } from "../constants";
+import { EnumHttpStatusCode, ErrorResponse, SuccessResponse } from "../../constants";
 
 const userController = new Elysia();
 const userService = new UserService();

@@ -1,4 +1,4 @@
-import db from "../db";
+import db from "../../db";
 import { User, UserData, UserInput, UserWithPassword } from "./user-entity";
 import { IUserRepository } from "./user-repository.types";
 

@@ -2,9 +2,9 @@ import cookie from "@elysiajs/cookie";
 import { Elysia } from "elysia";
 import { basicAuthModel } from "../auth-model";
 import { jwtAccessSetup, jwtRefreshSetup } from "../jwt-setup";
-import { EnumHttpStatusCode, ErrorResponse, SuccessResponse } from "../../constants";
+import { EnumHttpStatusCode, ErrorResponse, SuccessResponse } from "../../../constants";
 import UserService from "../../user/user-service";
-import { UserWithPassword } from "../../user/user-entity";
+import { UserWithPassword } from "../../user/user-entity"
 
 const userService = new UserService();
 

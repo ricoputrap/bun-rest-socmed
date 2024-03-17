@@ -1,5 +1,3 @@
-import { Elysia, t } from 'elysia'
-
 export type UserData = {
   id: number;
   name: string;
