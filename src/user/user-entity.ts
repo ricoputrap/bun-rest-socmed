@@ -4,9 +4,9 @@ export type UserData = {
   username: string;
   email: string;
   password: string;
-  profilePicture: string;
-  createdAt: number;
-  isActive: boolean;
+  profile_picture?: string;
+  is_active: boolean;
+  created_at?: number;
 }
 
 export type User = Omit<UserData, 'password'>;

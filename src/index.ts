@@ -4,8 +4,15 @@ import swagger from "@elysiajs/swagger";
 
 const app = new Elysia()
   .use(swagger())
-  .get("/", () => "Hello Elysia")
+  .get("/", () => {
+    return {
+      text: "Hello, Elysia!"
+    };
+  })
   .use(userController)
+  // todo .use(authController)
+  // todo .use(postController)
+  // todo .use(searchController)
   .listen(3000);
 
 console.log(
