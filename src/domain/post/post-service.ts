@@ -9,8 +9,15 @@ class PostService {
     this.postRepository = new PostRepository();
   }
 
-  async getAll(): Promise<PostData[]> {
-    return this.postRepository.getAll();
+  /**
+   * Retrieves all post data with optional pagination parameters.
+   *
+   * @param {number} size - The number of items to retrieve
+   * @param {number} cursor - An optional cursor for pagination, which is the post id
+   * @return {Promise<PostData[]>} A promise that resolves to an array of PostData
+   */
+  async getAll(size: number, cursor: number): Promise<PostData[]> {
+    return this.postRepository.getAll(size, cursor);
   }
 
   async create(post: PostInput): Promise<number> {

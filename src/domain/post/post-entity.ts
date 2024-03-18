@@ -34,5 +34,6 @@ export const postModel = new Elysia({ name: 'Model.Post' })
       content: t.String(),
       mood: t.Nullable(t.Numeric()),
       privacy: t.Nullable(t.Numeric()),
+      user_id: t.Numeric()
     })
   })

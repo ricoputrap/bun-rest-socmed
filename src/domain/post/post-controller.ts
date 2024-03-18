@@ -29,11 +29,22 @@ const postController = new Elysia({ prefix: "/posts" })
     return { payload };
   })
   .use(postModel)
-  .get("/", async ({ set }) => {
+  .get("/", async ({ set, query }) => {
     try {
-      const posts = await postService.getAll();
+      const size = query.size ? parseInt(query.size) : 10;
+      const cursor = query.cursor ? parseInt(query.cursor) : Number.MAX_VALUE;
+
+      const posts = await postService.getAll(size, cursor);
+      let next_cursor = posts[posts.length - 1]?.id ?? 0;
+
       const response: SuccessResponse = {
-        data: posts,
+        data: {
+          posts,
+          pagination: {
+            size,
+            next_cursor
+          }
+        },
         statusCode: EnumHttpStatusCode.OK
       }
 

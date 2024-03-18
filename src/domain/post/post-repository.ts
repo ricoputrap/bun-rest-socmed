@@ -3,11 +3,26 @@ import { PostData, PostInput } from "./post-entity";
 import { IPostRepository } from "./post-repository.types";
 
 class PostRepository implements IPostRepository {
-  getAll(): Promise<PostData[]> {
+  /**
+   * Retrieve all post data with optional pagination parameters
+   * from the oldest one to the newest one
+   * but the news one should be printed first
+   *
+   * @param {number} size - the number of items to retrieve
+   * @param {number} cursor - the post id to start retrieving items from
+   * @return {Promise<PostData[]>} a promise that resolves with an array of PostData
+   */
+  getAll(size: number, cursor: number): Promise<PostData[]> {
     return new Promise((resolve) => {
       const posts = db
-        .query<PostData, null>(`SELECT * FROM post`)
-        .all(null) as PostData[];
+        .query<PostData, [number, number]>(`
+          SELECT id, content, mood, privacy, created_at, user_id
+          FROM post
+          WHERE id < ?
+          ORDER BY id DESC
+          LIMIT ?
+        `)
+        .all(cursor, size) as PostData[];
 
       resolve(posts);
     })
