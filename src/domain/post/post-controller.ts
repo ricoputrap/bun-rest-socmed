@@ -2,10 +2,32 @@ import { Elysia } from "elysia";
 import { EnumPostMood, EnumPostPrivacy, PostInput, postModel } from "./post-entity";
 import PostService from "./post-service";
 import { EnumHttpStatusCode, ErrorResponse, SuccessResponse } from "../../constants";
+import { jwtAccessSetup } from "../auth/jwt-setup";
 
 const postService = new PostService();
 
 const postController = new Elysia({ prefix: "/posts" })
+  .use(jwtAccessSetup)
+  .derive(async ({ jwt, request: { headers } }) => {
+    const authorization = headers.get("Authorization") ?? "Bearer ";
+
+    // "Authorization" : "Bearer <token>"
+    const token = authorization.split(" ")[1];
+  
+    // token is missing
+    if (!token) {
+      throw new Error("Missing token");
+    }
+
+    // validate payload
+    const payload = await jwt.verify(token);
+
+    if (!payload) {
+      throw new Error("Invalid token");
+    }
+
+    return { payload };
+  })
   .use(postModel)
   .get("/", async ({ set }) => {
     try {
@@ -28,7 +50,7 @@ const postController = new Elysia({ prefix: "/posts" })
       return errorResponse;
     }
   })
-  .post("/create", async ({ body, set }) => {
+  .post("/create", async ({ body, set, payload }) => {
     try {
       if (body.content === "") {
         throw new Error("Content is required");
@@ -38,7 +60,7 @@ const postController = new Elysia({ prefix: "/posts" })
         content: body.content,
         mood: body.mood ?? EnumPostMood.NORMAL,
         privacy: body.privacy ?? EnumPostPrivacy.PUBLIC,
-        user_id: 1
+        user_id: payload.id
       }
 
       const postId = await postService.create(newPost);
