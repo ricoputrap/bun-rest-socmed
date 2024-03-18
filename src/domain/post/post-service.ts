@@ -16,8 +16,8 @@ class PostService {
    * @param {number} cursor - An optional cursor for pagination, which is the post id
    * @return {Promise<PostData[]>} A promise that resolves to an array of PostData
    */
-  async getAll(size: number, cursor: number): Promise<PostData[]> {
-    return this.postRepository.getAll(size, cursor);
+  async getAll(size: number, cursor: number, user_id: number): Promise<PostData[]> {
+    return this.postRepository.getAll(size, cursor, user_id);
   }
 
   async create(post: PostInput): Promise<number> {

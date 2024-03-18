@@ -33,8 +33,10 @@ const postController = new Elysia({ prefix: "/posts" })
     try {
       const size = query.size ? parseInt(query.size) : 10;
       const cursor = query.cursor ? parseInt(query.cursor) : Number.MAX_VALUE;
+      const user_id = query.user_id ? parseInt(query.user_id) : 0;
 
-      const posts = await postService.getAll(size, cursor);
+      const posts = await postService.getAll(size, cursor, user_id);
+
       let next_cursor = posts[posts.length - 1]?.id ?? 0;
 
       const response: SuccessResponse = {
